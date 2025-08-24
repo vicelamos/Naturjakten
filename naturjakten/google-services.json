@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "831398981621",
+    "project_id": "naturjakten-88c95",
+    "storage_bucket": "naturjakten-88c95.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:831398981621:android:3e4b398891c1d93df9babc",
+        "android_client_info": {
+          "package_name": "com.naturjakten"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2OlCfx1adhUhCWuJ_FTnGFAjzLi8mmH4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
