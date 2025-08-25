@@ -1,38 +1,34 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+// Fil: App.tsx
 
-import { NewAppScreen } from '@react-native/new-app-screen';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
-import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
+import React, { useState, useEffect } from 'react';
+import { SafeAreaView, StatusBar, StyleSheet } from 'react-native';
+// NYA IMPORTER
+import { getAuth, onAuthStateChanged, User } from '@react-native-firebase/auth';
 
-function App() {
-  const isDarkMode = useColorScheme() === 'dark';
+import LoginScreen from './src/screens/LoginScreen';
+import HomeScreen from './src/screens/HomeScreen';
 
-  return (
-    <SafeAreaProvider>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <AppContent />
-    </SafeAreaProvider>
-  );
-}
+// Hämta en referens till auth-tjänsten
+const auth = getAuth();
 
-function AppContent() {
-  const safeAreaInsets = useSafeAreaInsets();
+function App(): React.JSX.Element {
+  // Ändra typen för user-state till den nya User-typen
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    // NY SYNTAX för lyssnaren
+    const subscriber = onAuthStateChanged(auth, (userState) => {
+      setUser(userState);
+    });
+
+    return subscriber;
+  }, []);
 
   return (
-    <View style={styles.container}>
-      <NewAppScreen
-        templateFileName="App.tsx"
-        safeAreaInsets={safeAreaInsets}
-      />
-    </View>
+    <SafeAreaView style={styles.container}>
+      <StatusBar barStyle={'dark-content'} />
+      {user ? <HomeScreen /> : <LoginScreen />}
+    </SafeAreaView>
   );
 }
 
