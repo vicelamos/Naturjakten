@@ -1,41 +1,55 @@
 // Fil: App.tsx
 
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView, StatusBar, StyleSheet } from 'react-native';
-// NYA IMPORTER
 import { getAuth, onAuthStateChanged, User } from '@react-native-firebase/auth';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+// Uppdaterade importer
 import LoginScreen from './src/screens/LoginScreen';
 import HomeScreen from './src/screens/HomeScreen';
+import NewObservationScreen from './src/screens/NewObservationScreen';
+import MyObservationsScreen from './src/screens/MyObservationsScreen';
+import MapScreen from './src/screens/MapScreen';
 
-// Hämta en referens till auth-tjänsten
 const auth = getAuth();
+const Stack = createNativeStackNavigator();
 
 function App(): React.JSX.Element {
-  // Ändra typen för user-state till den nya User-typen
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    // NY SYNTAX för lyssnaren
-    const subscriber = onAuthStateChanged(auth, (userState) => {
+    const subscriber = onAuthStateChanged(auth, userState => {
       setUser(userState);
     });
-
     return subscriber;
   }, []);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar barStyle={'dark-content'} />
-      {user ? <HomeScreen /> : <LoginScreen />}
-    </SafeAreaView>
+    <NavigationContainer>
+      <Stack.Navigator>
+        {user ? (
+          <>
+            <Stack.Screen
+              name="Home"
+              component={HomeScreen}
+              options={{ headerShown: false }}
+            />
+            {/* Uppdaterade skärmar och titlar */}
+            <Stack.Screen name="NewObservation" component={NewObservationScreen} options={{ title: 'Ny Observation' }} />
+            <Stack.Screen name="MyObservations" component={MyObservationsScreen} options={{ title: 'Mina Observationer' }} />
+            <Stack.Screen name="Map" component={MapScreen} options={{ title: 'Karta' }} />
+          </>
+        ) : (
+          <Stack.Screen
+            name="Login"
+            component={LoginScreen}
+            options={{ headerShown: false }}
+          />
+        )}
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
 
 export default App;
