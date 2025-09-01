@@ -1,16 +1,11 @@
 // Fil: App.tsx
-
 import React, { useState, useEffect } from 'react';
 import { getAuth, onAuthStateChanged, User } from '@react-native-firebase/auth';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-// Uppdaterade importer
 import LoginScreen from './src/screens/LoginScreen';
-import HomeScreen from './src/screens/HomeScreen';
-import NewObservationScreen from './src/screens/NewObservationScreen';
-import MyObservationsScreen from './src/screens/MyObservationsScreen';
-import MapScreen from './src/screens/MapScreen';
+import TabNavigator from './src/navigation/TabNavigator'; // Importera din nya meny
 
 const auth = getAuth();
 const Stack = createNativeStackNavigator();
@@ -27,25 +22,13 @@ function App(): React.JSX.Element {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
         {user ? (
-          <>
-            <Stack.Screen
-              name="Home"
-              component={HomeScreen}
-              options={{ headerShown: false }}
-            />
-            {/* Uppdaterade skärmar och titlar */}
-            <Stack.Screen name="NewObservation" component={NewObservationScreen} options={{ title: 'Ny Observation' }} />
-            <Stack.Screen name="MyObservations" component={MyObservationsScreen} options={{ title: 'Mina Observationer' }} />
-            <Stack.Screen name="Map" component={MapScreen} options={{ title: 'Karta' }} />
-          </>
+          // Om inloggad, visa hela appen med menyraden
+          <Stack.Screen name="Main" component={TabNavigator} />
         ) : (
-          <Stack.Screen
-            name="Login"
-            component={LoginScreen}
-            options={{ headerShown: false }}
-          />
+          // Annars, visa bara inloggningssidan
+          <Stack.Screen name="Login" component={LoginScreen} />
         )}
       </Stack.Navigator>
     </NavigationContainer>
