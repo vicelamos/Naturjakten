@@ -1,7 +1,8 @@
 // Fil: src/screens/HomeScreen.tsx
 import React from 'react';
-import { View, Text, StyleSheet, ImageBackground, SafeAreaView } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground} from 'react-native';
 import { getAuth } from '@react-native-firebase/auth';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const auth = getAuth();
 

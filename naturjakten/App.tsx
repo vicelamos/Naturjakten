@@ -5,7 +5,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import LoginScreen from './src/screens/LoginScreen';
-import TabNavigator from './src/navigation/TabNavigator'; // Importera din nya meny
+import TabNavigator from './src/navigation/TabNavigator';
+import MapPickerScreen from './src/screens/MapPickerScreen';
 
 const auth = getAuth();
 const Stack = createNativeStackNavigator();
@@ -30,6 +31,10 @@ function App(): React.JSX.Element {
           // Annars, visa bara inloggningssidan
           <Stack.Screen name="Login" component={LoginScreen} />
         )}
+        <Stack.Screen name="MyObservations" component={MyObservationsScreen} options={{ title: 'Mina Observationer' }} />
+<Stack.Screen name="Map" component={MapScreen} options={{ title: 'Karta' }} />
+{/* LÄGG TILL DENNA RAD */}
+<Stack.Screen name="MapPicker" component={MapPickerScreen} options={{ title: 'Välj Plats' }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
